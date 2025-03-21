@@ -2,11 +2,11 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Laravel\Sanctum\HasApiTokens;
 
 class Admin extends Authenticatable
 {
 	use HasApiTokens;
     
-	rotected $fillable = ['email', 'password'];
+	protected $fillable = ['email', 'password'];
 }
