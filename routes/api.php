@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AdminController;
 use App\Http\Controllers\Api\ProfileController;
 use App\Http\Controllers\Api\CommentController;
+use App\Http\Controllers\Api\AuthController;
 use Laravel\Sanctum\Sanctum;
 
 
@@ -14,8 +15,15 @@ use Laravel\Sanctum\Sanctum;
 
 
 // Authentification
-Route::post('login', [AdminController::class, 'login']); // Pour la connexion
-Route::post('register', [AdminController::class, 'register']); // Pour l'enregistrement
+Route::prefix('auth')->group(function () {
+    Route::post('/register', [AuthController::class, 'register']);
+    Route::post('/login', [AuthController::class, 'login']);
+});
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::post('/logout', [AuthController::class, 'logout']);
+});
+
 
 Route::middleware('auth:sanctum')->group(function () {
     // Pour gérer les profils
@@ -27,3 +35,8 @@ Route::middleware('auth:sanctum')->group(function () {
     // Pour ajouter des commentaires
     Route::post('profiles/{id}/comments', [CommentController::class, 'store']);
 });
+
+
+
+
+
