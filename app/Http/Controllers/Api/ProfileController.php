@@ -4,16 +4,17 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Profile;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class ProfileController extends Controller
 {
-  // Créer un profil
-    public function store(Request $request)
+    // Créer un profil
+    public function store(Request $request): JsonResponse
     {
         $request->validate([
-            'name' => 'required|string',
+            'last_name' => 'required|string',
             'first_name' => 'required|string',
             'status' => 'required|in:inactive,pending,active',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif',
@@ -23,9 +24,9 @@ class ProfileController extends Controller
         $imagePath = $request->file('image')->store('profile_images', 'public');
 
         $profile = Profile::create([
-            'name' => $request->name,
-            'admin_id' => $admin->id,
+            'last_name' => $request->last_name,
             'first_name' => $request->first_name,
+            'admin_id' => $admin->id,
             'image' => $imagePath,
             'status' => $request->status,
         ]);
@@ -34,23 +35,23 @@ class ProfileController extends Controller
     }
 
     // Récupérer les profils actifs
-    public function getActiveProfiles()
+    public function getActiveProfiles(): JsonResponse
     {
         $profiles = Profile::where('status', 'active')
-                            ->select('id', 'name', 'first_name', 'image')
-                            ->get();
+            ->select('id', 'last_name', 'first_name', 'image')
+            ->get();
         return response()->json($profiles);
     }
 
     // Modifier ou supprimer un profil
-    public function update(Request $request, $id)
+    public function update(Request $request, $id): JsonResponse
     {
         $profile = Profile::findOrFail($id);
         $profile->update($request->all());
         return response()->json($profile);
     }
 
-    public function destroy($id)
+    public function destroy($id): JsonResponse
     {
         $profile = Profile::findOrFail($id);
         $profile->delete();

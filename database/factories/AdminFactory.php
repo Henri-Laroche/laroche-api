@@ -2,16 +2,16 @@
 
 namespace Database\Factories;
 
-use App\Models\User;
+use App\Models\Admin;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Facades\Hash;
+
 
 /**
- * @extends Factory<User>
+ * @extends Factory<Admin>
  */
-class UserFactory extends Factory
+class AdminFactory extends Factory
 {
-    protected $model = User::class;
+    protected $model = Admin::class;
 
     public function definition(): array
     {
@@ -19,7 +19,7 @@ class UserFactory extends Factory
             'first_name' => $this->faker->firstName(),
             'last_name' => $this->faker->lastName(),
             'email' => $this->faker->unique()->safeEmail(),
-            'password' => Hash::make('password'), // Hash du mot de passe
+            'password' => bcrypt('password'), // Change possible avec Hash::make()
         ];
     }
 }

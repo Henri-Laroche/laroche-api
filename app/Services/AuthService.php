@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthService implements AuthServiceInterface
 {
-    protected $adminRepo;
+    protected AdminRepositoryInterface $adminRepo;
 
     public function __construct(AdminRepositoryInterface $adminRepo)
     {

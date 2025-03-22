@@ -2,17 +2,23 @@
 
 namespace App\Models;
 
+use Illuminate\Auth\Authenticatable;
+use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Laravel\Sanctum\HasApiTokens;
-use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
-class Admin extends Authenticatable
+/**
+ * @method static create(array $data)
+ * @method static where(string $string, string $email)
+ */
+class Admin extends Model implements AuthenticatableContract
 {
-	use HasApiTokens, HasFactory;
-    
-	protected $fillable = ['name', 'email', 'password'];
-	
-	protected $hidden = ['password'];
+    use HasApiTokens, HasFactory, Authenticatable;
+
+    protected $fillable = ['first_name', 'last_name', 'email', 'password'];
+
+    protected $hidden = ['password'];
 
     protected $casts = [
         'password' => 'hashed',
