@@ -12,10 +12,6 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\JsonResponse;
 use OpenApi\Annotations as OA;
 
-
-/**
- * @method authorize(string $string, array $array)
- */
 class CommentController extends Controller
 {
     use AuthorizesRequests;
@@ -26,7 +22,6 @@ class CommentController extends Controller
     {
         $this->commentService = $commentService;
     }
-
 
     /**
      * @OA\Post(
@@ -50,19 +45,19 @@ class CommentController extends Controller
      *
      * @throws AuthorizationException
      */
-
-    // Endpoint protégé pour ajouter un commentaire sur un profil.
     public function store(StoreCommentRequest $request): JsonResponse
     {
-        $data = $request->validated();
-        $profile = Profile::findOrFail($data['profile_id']);
+        $admin = auth()->user();
+        $profile = Profile::findOrFail($request->validated('profile_id'));
 
-        // Maintenant, cette méthode fonctionnera correctement.
+        // Autorisation via CommentPolicy
         $this->authorize('create', [Comment::class, $profile]);
 
-        $data['admin_id'] = auth()->id();
-
-        $comment = Comment::create($data);
+        $comment = $this->commentService->createComment([
+            'admin_id' => $admin->id,
+            'profile_id' => $profile->id,
+            'content' => $request->validated('content'),
+        ]);
 
         return response()->json($comment, 201);
     }

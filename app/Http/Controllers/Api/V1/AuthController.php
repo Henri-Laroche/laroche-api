@@ -47,7 +47,7 @@ class AuthController extends Controller
         $admin = $this->authService->register($data);
 
         return response()->json([
-            'message' => 'Registration successful',
+            'message' => 'Connexion réussie',
             'token'   => $admin->createToken('apiToken')->plainTextToken
         ], 201);
     }
@@ -79,11 +79,11 @@ class AuthController extends Controller
         $token = $this->authService->login($credentials);
 
         if (!$token) {
-            return response()->json(['message' => 'Invalid credentials'], 401);
+            return response()->json(['message' => 'Identifiants invalides'], 401);
         }
 
         return response()->json([
-            'message' => 'Login successful',
+            'message' => 'Connexion réussie',
             'token'   => $token
         ]);
     }

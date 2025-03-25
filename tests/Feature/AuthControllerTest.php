@@ -26,7 +26,7 @@ class AuthControllerTest extends TestCase
 
         $response->assertStatus(201)
             ->assertJsonStructure(['message', 'token'])
-            ->assertJson(['message' => 'Registration successful']);
+            ->assertJson(['message' => 'Connexion réussie']);
 
         $this->assertDatabaseHas('admins', ['email' => 'admin@example.com']);
     }
@@ -48,7 +48,7 @@ class AuthControllerTest extends TestCase
 
         $response->assertStatus(200)
             ->assertJsonStructure(['message', 'token'])
-            ->assertJson(['message' => 'Login successful']);
+            ->assertJson(['message' => 'Connexion réussie']);
     }
 
     #[Test]
@@ -67,6 +67,6 @@ class AuthControllerTest extends TestCase
         $response = $this->postJson('/api/login', $invalidCredentials);
 
         $response->assertStatus(401)
-            ->assertJson(['message' => 'Invalid credentials']);
+            ->assertJson(['message' => 'Identifiants invalides']);
     }
 }

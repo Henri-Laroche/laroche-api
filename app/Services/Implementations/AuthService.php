@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Hash;
 class AuthService implements AuthServiceInterface
 {
     /**
-     * Register a new admin.
+     * Enregistrer un nouvel administrateur.
      *
      * @param array $data
      * @return Admin
@@ -21,7 +21,7 @@ class AuthService implements AuthServiceInterface
     }
 
     /**
-     * Authenticate an admin and generate an API token.
+     * Authentifiez un administrateur et générez un jeton API.
      *
      * @param array $credentials
      * @return string|false

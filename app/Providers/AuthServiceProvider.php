@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Gate;
 class AuthServiceProvider extends ServiceProvider
 {
     /**
-     * The policy mappings for the application.
+     * Les mappages de policies pour l'application.
      *
      * @var array<class-string, class-string>
      */
@@ -23,7 +23,7 @@ class AuthServiceProvider extends ServiceProvider
     ];
 
     /**
-     * Register any authentication / authorization services.
+     * Enregistrez tous les services d’authentification/autorisation.
      */
     public function boot(): void
     {
