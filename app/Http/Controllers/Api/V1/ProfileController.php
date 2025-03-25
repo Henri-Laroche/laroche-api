@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreProfileRequest;
 use App\Http\Requests\UpdateProfileRequest;
 use App\Http\Resources\ProfileResource;
 use App\Models\Profile;
 use App\Services\Contracts\ProfileServiceInterface;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\JsonResponse;
-
 
 
 class ProfileController extends Controller
@@ -52,6 +53,10 @@ class ProfileController extends Controller
 
 
     // Endpoint protégé pour modifier un profil
+
+    /**
+     * @throws AuthorizationException
+     */
     public function update(UpdateProfileRequest $request, Profile $profile): JsonResponse
     {
         //ici, je laisse le code au cas où si on doit autoriser que l'administrateur qui a créé soit modifié
@@ -64,7 +69,7 @@ class ProfileController extends Controller
         //        return response()->json(new ProfileResource($updatedProfile));
 
 
-        $this->authorize('update', $profile); // 👈 Autorise toujours !
+        $this->authorize('update', $profile);
 
         $updatedProfile = $this->profileService->updateProfile($profile->id, $request->validated());
 
@@ -74,6 +79,10 @@ class ProfileController extends Controller
 
 
     // Endpoint protégé pour supprimer un profil
+
+    /**
+     * @throws AuthorizationException
+     */
     public function destroy(Profile $profile): JsonResponse
     {
         //ici, je laisse le code au cas où si on doit autoriser que l'administrateur qui a créé peux supprimé
