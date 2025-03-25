@@ -7,22 +7,28 @@ use Illuminate\Foundation\Http\FormRequest;
 class StoreProfileRequest extends FormRequest
 {
     /**
-     * Determine if the user is authorized to make this request.
+     * Détermine si l'utilisateur est autorisé à faire cette requête.
+     *
+     * @return bool
      */
     public function authorize(): bool
     {
-        return false;
+        // Retournez true pour autoriser tous les utilisateurs authentifiés (ou appliquez votre logique)
+        return true;
     }
 
     /**
-     * Get the validation rules that apply to the request.
+     * Définit les règles de validation pour la requête.
      *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
+     * @return array
      */
     public function rules(): array
     {
         return [
-            //
+            'nom' => 'required|string|max:255',
+            'first_name' => 'required|string|max:255',
+            'image' => 'required|string', // ou 'required|image' selon votre besoin
+            'status' => 'required|in:inactif,en attente,actif',
         ];
     }
 }
