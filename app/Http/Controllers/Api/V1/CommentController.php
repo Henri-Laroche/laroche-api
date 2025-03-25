@@ -10,6 +10,7 @@ use App\Services\Contracts\CommentServiceInterface;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\JsonResponse;
+use OpenApi\Annotations as OA;
 
 
 /**
@@ -26,11 +27,31 @@ class CommentController extends Controller
         $this->commentService = $commentService;
     }
 
-    // Endpoint protégé pour ajouter un commentaire sur un profil.
 
     /**
+     * @OA\Post(
+     *     path="/api/comments",
+     *     tags={"Comments"},
+     *     summary="Ajouter un commentaire sur un profil (admin uniquement, un seul commentaire par profil)",
+     *     security={{"sanctum":{}}},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"profile_id","content"},
+     *             @OA\Property(property="profile_id", type="integer", example=1),
+     *             @OA\Property(property="content", type="string", example="Très bon profil !")
+     *         )
+     *     ),
+     *     @OA\Response(response=201, description="Commentaire ajouté avec succès"),
+     *     @OA\Response(response=403, description="Action non autorisée (déjà commenté)"),
+     *     @OA\Response(response=422, description="Erreur de validation des données"),
+     *     @OA\Response(response=401, description="Non authentifié")
+     * )
+     *
      * @throws AuthorizationException
      */
+
+    // Endpoint protégé pour ajouter un commentaire sur un profil.
     public function store(StoreCommentRequest $request): JsonResponse
     {
         $data = $request->validated();

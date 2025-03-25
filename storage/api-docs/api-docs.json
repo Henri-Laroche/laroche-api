@@ -1,0 +1,301 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Laroche API Laravel 12",
+        "description": "Documentation complète de l'API Laravel avec Sanctum, Swagger et une architecture propre (SOLID).",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/register": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Inscription d'un nouvel administrateur",
+                "operationId": "d6f5d00c40f9de2e9272088aebe648c8",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Super Admin"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "admin@example.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "password123"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Compte créé avec succès"
+                    },
+                    "422": {
+                        "description": "Erreur de validation"
+                    }
+                }
+            }
+        },
+        "/api/login": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Connexion d'un administrateur",
+                "operationId": "0f5784f47a3fcac35f86ec4e82d967d7",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "admin@example.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "password123"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Connecté avec succès"
+                    },
+                    "401": {
+                        "description": "Identifiants invalides"
+                    }
+                }
+            }
+        },
+        "/api/comments": {
+            "post": {
+                "tags": [
+                    "Comments"
+                ],
+                "summary": "Ajouter un commentaire sur un profil (admin uniquement, un seul commentaire par profil)",
+                "operationId": "943ef5a9a3a98223c01a1267e636d7e8",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "profile_id",
+                                    "content"
+                                ],
+                                "properties": {
+                                    "profile_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "content": {
+                                        "type": "string",
+                                        "example": "Très bon profil !"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Commentaire ajouté avec succès"
+                    },
+                    "403": {
+                        "description": "Action non autorisée (déjà commenté)"
+                    },
+                    "422": {
+                        "description": "Erreur de validation des données"
+                    },
+                    "401": {
+                        "description": "Non authentifié"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/profiles": {
+            "get": {
+                "tags": [
+                    "Profiles"
+                ],
+                "summary": "Récupérer la liste des profils actifs (public, statut visible uniquement pour les admins authentifiés)",
+                "operationId": "92d33432e4b6b56fbf6887fede4b2a66",
+                "responses": {
+                    "200": {
+                        "description": "Liste des profils actifs",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "id": {
+                                                "type": "integer",
+                                                "example": 1
+                                            },
+                                            "nom": {
+                                                "type": "string",
+                                                "example": "Laroche"
+                                            },
+                                            "first_name": {
+                                                "type": "string",
+                                                "example": "Henri"
+                                            },
+                                            "image_url": {
+                                                "type": "string",
+                                                "example": "http://localhost:8000/storage/profiles/profile.jpg"
+                                            },
+                                            "admin_id": {
+                                                "type": "integer",
+                                                "example": 1
+                                            },
+                                            "status": {
+                                                "description": "Visible uniquement pour les administrateurs authentifiés",
+                                                "type": "string",
+                                                "example": "actif"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Non authentifié (facultatif, uniquement si nécessaire)"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Profiles"
+                ],
+                "summary": "Créer un profil (admin uniquement)",
+                "operationId": "c0c170a3a5458f63601fcd9ec2fe896a",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "nom",
+                                    "first_name",
+                                    "image",
+                                    "status"
+                                ],
+                                "properties": {
+                                    "nom": {
+                                        "type": "string",
+                                        "example": "Laroche"
+                                    },
+                                    "first_name": {
+                                        "type": "string",
+                                        "example": "Henri"
+                                    },
+                                    "image": {
+                                        "type": "string",
+                                        "format": "binary"
+                                    },
+                                    "status": {
+                                        "type": "string",
+                                        "enum": [
+                                            "inactif",
+                                            "en attente",
+                                            "actif"
+                                        ],
+                                        "example": "actif"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Profil créé avec succès"
+                    },
+                    "422": {
+                        "description": "Erreur de validation"
+                    },
+                    "401": {
+                        "description": "Non authentifié"
+                    },
+                    "403": {
+                        "description": "Non autorisé (rôle insuffisant)"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "sanctum": {
+                "type": "apiKey",
+                "description": "Token Sanctum (Bearer {token})",
+                "name": "Authorization",
+                "in": "header"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Auth",
+            "description": "Auth"
+        },
+        {
+            "name": "Comments",
+            "description": "Comments"
+        },
+        {
+            "name": "Profiles",
+            "description": "Profiles"
+        }
+    ]
+}

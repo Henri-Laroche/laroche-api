@@ -11,6 +11,7 @@ use App\Services\Contracts\ProfileServiceInterface;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\JsonResponse;
+use OpenApi\Annotations as OA;
 
 
 class ProfileController extends Controller
@@ -24,6 +25,31 @@ class ProfileController extends Controller
         $this->profileService = $profileService;
     }
 
+    /**
+     * @OA\Get(
+     *     path="/api/profiles",
+     *     tags={"Profiles"},
+     *     summary="Récupérer la liste des profils actifs (public, statut visible uniquement pour les admins authentifiés)",
+     *     security={{"sanctum":{}}},
+     *     @OA\Response(
+     *         response=200,
+     *         description="Liste des profils actifs",
+     *         @OA\JsonContent(
+     *             type="array",
+     *             @OA\Items(
+     *                 @OA\Property(property="id", type="integer", example=1),
+     *                 @OA\Property(property="nom", type="string", example="Laroche"),
+     *                 @OA\Property(property="first_name", type="string", example="Henri"),
+     *                 @OA\Property(property="image_url", type="string", example="http://localhost:8000/storage/profiles/profile.jpg"),
+     *                 @OA\Property(property="admin_id", type="integer", example=1),
+     *                 @OA\Property(property="status", type="string", example="actif", description="Visible uniquement pour les administrateurs authentifiés")
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(response=401, description="Non authentifié (facultatif, uniquement si nécessaire)")
+     * )
+     */
+
     // Endpoint public pour récupérer les profils actifs
     public function index(): JsonResponse
     {
@@ -33,6 +59,32 @@ class ProfileController extends Controller
         // Retourne les données formatées via une ressource
         return response()->json(ProfileResource::collection($profiles));
     }
+
+    /**
+     * @OA\Post(
+     *     path="/api/profiles",
+     *     tags={"Profiles"},
+     *     summary="Créer un profil (admin uniquement)",
+     *     security={{"sanctum":{}}},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\MediaType(
+     *             mediaType="multipart/form-data",
+     *             @OA\Schema(
+     *                 required={"nom","first_name","image","status"},
+     *                 @OA\Property(property="nom", type="string", example="Laroche"),
+     *                 @OA\Property(property="first_name", type="string", example="Henri"),
+     *                 @OA\Property(property="image", type="string", format="binary"),
+     *                 @OA\Property(property="status", type="string", enum={"inactif","en attente","actif"}, example="actif")
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(response=201, description="Profil créé avec succès"),
+     *     @OA\Response(response=422, description="Erreur de validation"),
+     *     @OA\Response(response=401, description="Non authentifié"),
+     *     @OA\Response(response=403, description="Non autorisé (rôle insuffisant)")
+     * )
+     */
 
     // Endpoint protégé pour créer un profil
     public function store(StoreProfileRequest $request): JsonResponse
@@ -51,6 +103,37 @@ class ProfileController extends Controller
         return response()->json(new ProfileResource($profile), 201);
     }
 
+    /**
+     * @OA\Put(
+     *     path="/api/profiles/{profile}",
+     *     tags={"Profiles"},
+     *     summary="Modifier un profil (admin uniquement, tous les admins autorisés)",
+     *     security={{"sanctum":{}}},
+     *     @OA\Parameter(
+     *         name="profile",
+     *         description="ID du profil à modifier",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(type="integer", example=1)
+     *     ),
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             @OA\Property(property="nom", type="string", example="Laroche modifié"),
+     *             @OA\Property(property="first_name", type="string", example="Henri"),
+     *             @OA\Property(property="image", type="string", example="images/nouveau.jpg"),
+     *             @OA\Property(property="status", type="string", enum={"inactif", "en attente", "actif"}, example="actif")
+     *         )
+     *     ),
+     *     @OA\Response(response=200, description="Profil modifié avec succès"),
+     *     @OA\Response(response=422, description="Erreur de validation"),
+     *     @OA\Response(response=404, description="Profil non trouvé"),
+     *     @OA\Response(response=401, description="Non authentifié"),
+     *     @OA\Response(response=403, description="Non autorisé (rôle insuffisant)")
+     * )
+     *
+     * @throws AuthorizationException
+     */
 
     // Endpoint protégé pour modifier un profil
 
@@ -77,6 +160,27 @@ class ProfileController extends Controller
 
     }
 
+    /**
+     * @OA\Delete(
+     *     path="/api/profiles/{profile}",
+     *     tags={"Profiles"},
+     *     summary="Supprimer un profil (admin uniquement, tous les admins autorisés)",
+     *     security={{"sanctum":{}}},
+     *     @OA\Parameter(
+     *         name="profile",
+     *         description="ID du profil à supprimer",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(type="integer", example=1)
+     *     ),
+     *     @OA\Response(response=200, description="Profil supprimé avec succès"),
+     *     @OA\Response(response=404, description="Profil non trouvé"),
+     *     @OA\Response(response=401, description="Non authentifié"),
+     *     @OA\Response(response=403, description="Non autorisé (rôle insuffisant)")
+     * )
+     *
+     * @throws AuthorizationException
+     */
 
     // Endpoint protégé pour supprimer un profil
 

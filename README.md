@@ -8,12 +8,12 @@
 
 ## 📖 Description du projet
 
-Ce projet est une API REST développée avec Laravel 12. 
-Elle permet une gestion complète des administrateurs, 
-des profils et des commentaires, 
-incluant l’authentification sécurisée via Laravel Sanctum, 
-la gestion sécurisée des fichiers avec Laravel Storage, 
-et une documentation interactive via Swagger. 
+Ce projet est une API REST développée avec Laravel 12.
+Elle permet une gestion complète des administrateurs,
+des profils et des commentaires,
+incluant l’authentification sécurisée via Laravel Sanctum,
+la gestion sécurisée des fichiers avec Laravel Storage,
+et une documentation interactive via Swagger.
 L'architecture respecte strictement les principes S.O.L.I.D.
 
 ---
@@ -36,51 +36,57 @@ L'architecture respecte strictement les principes S.O.L.I.D.
 - PHP 8.2 ou supérieur
 - Composer
 - MySQL ou PostgreSQL
-- Redis (optionnel pour cache)
-- Docker (optionnel)
+-
 
 ---
 
 ## 🛠 Installation
 
 1. Clone le dépôt :
+
 ```bash
 git clone https://github.com/ton-compte/laroche-api.git
 cd laroche-api
 ```
 
 2. Installe les dépendances :
+
 ```bash
 composer install
 ```
 
 3. Configure ton fichier `.env` :
+
 ```bash
 cp .env.example .env
 php artisan key:generate
 ```
 
 4. Configure ta base de données dans `.env` :
+
 ```dotenv
 DB_CONNECTION=pgsql
 DB_HOST=127.0.0.1
 DB_PORT=5432
-DB_DATABASE=api-laroche
+DB_DATABASE=laroche-api
 DB_USERNAME=postgres
-DB_PASSWORD=laroche-api
+DB_PASSWORD=
 ```
 
 5. Migrer la base de données :
+
 ```bash
 php artisan migrate --seed
 ```
 
 6. Crée le lien symbolique pour les fichiers :
+
 ```bash
 php artisan storage:link
 ```
 
 7. Lance ton serveur Laravel :
+
 ```bash
 php artisan serve
 ```
@@ -90,6 +96,7 @@ php artisan serve
 ## ✅ Tests
 
 Lance les tests automatisés avec PHPUnit :
+
 ```bash
 php artisan test
 ```
@@ -99,11 +106,13 @@ php artisan test
 ## 📗 Documentation de l’API (Swagger)
 
 - Génère la documentation :
+
 ```bash
 php artisan l5-swagger:generate
 ```
 
 - Accède à la documentation interactive :
+
 ```
 http://localhost:8000/api/documentation
 ```
@@ -149,6 +158,8 @@ app/
 - CI/CD via GitHub Actions
 - Analyse statique du code (Laravel Pint, PHPStan)
 - Gestion avancée des rôles et permissions (Spatie Permission)
+- Redis (pour cache)
+- Docker
 
 ---
 
