@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             AdminSeeder::class,
             ProfileSeeder::class,
+            CommentSeeder::class,
         ]);
 
     }
