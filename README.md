@@ -158,7 +158,7 @@ app/
 - Analyse statique du code (Laravel Pint, PHPStan)
 - Gestion avancée des rôles et permissions (Spatie Permission)
 - Redis (pour cache)
-- Docker
+- Addition de try et catch
 
 ---
 
