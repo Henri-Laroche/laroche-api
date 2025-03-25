@@ -8,12 +8,10 @@
 
 ## 📖 Description du projet
 
-Ce projet est une API REST développée avec Laravel 12.
+Ce projet est une API REST développée avec Laravel 12 avec PHP-8.4.5.
 Elle permet une gestion complète des administrateurs,
-des profils et des commentaires,
-incluant l’authentification sécurisée via Laravel Sanctum,
-la gestion sécurisée des fichiers avec Laravel Storage,
-et une documentation interactive via Swagger.
+des profils et des commentaires, incluant l’authentification sécurisée via Laravel Sanctum,
+la gestion sécurisée des fichiers avec Laravel Storage, et une documentation interactive via Swagger.
 L'architecture respecte strictement les principes S.O.L.I.D.
 
 ---
@@ -36,7 +34,7 @@ L'architecture respecte strictement les principes S.O.L.I.D.
 - PHP 8.2 ou supérieur
 - Composer
 - MySQL ou PostgreSQL
--
+
 
 ---
 
@@ -71,6 +69,7 @@ DB_PORT=5432
 DB_DATABASE=laroche-api
 DB_USERNAME=postgres
 DB_PASSWORD=
+
 ```
 
 5. Migrer la base de données :
