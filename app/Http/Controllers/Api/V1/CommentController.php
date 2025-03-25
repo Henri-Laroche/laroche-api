@@ -7,6 +7,7 @@ use App\Http\Requests\StoreCommentRequest;
 use App\Models\Comment;
 use App\Models\Profile;
 use App\Services\Contracts\CommentServiceInterface;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\JsonResponse;
 
@@ -26,6 +27,10 @@ class CommentController extends Controller
     }
 
     // Endpoint protégé pour ajouter un commentaire sur un profil.
+
+    /**
+     * @throws AuthorizationException
+     */
     public function store(StoreCommentRequest $request): JsonResponse
     {
         $data = $request->validated();
