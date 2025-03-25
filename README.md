@@ -2,7 +2,7 @@
 
 ## 👨‍💻 Auteur
 
-- **Henri Laroche** - [Lien vers ton GitHub ou LinkedIn]
+- **Henri Laroche**
 
 ---
 
