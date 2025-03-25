@@ -46,7 +46,7 @@ L'architecture respecte strictement les principes S.O.L.I.D.
 1. Clone le dépôt :
 ```bash
 git clone https://github.com/ton-compte/laroche-api.git
-cd api-laravel-12
+cd laroche-api
 ```
 
 2. Installe les dépendances :
