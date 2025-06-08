@@ -11,7 +11,6 @@ use App\Services\Contracts\ProfileServiceInterface;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\JsonResponse;
-use OpenApi\Annotations as OA;
 
 
 class ProfileController extends Controller
@@ -29,7 +28,7 @@ class ProfileController extends Controller
      * @OA\Get(
      *     path="/api/profiles",
      *     tags={"Profiles"},
-     *     summary="Récupérer la liste des profils actifs (public, statut visible uniquement pour les admins authentifiés)",
+     *     summary="Recuperar a lista de perfis ativos (público, status visível apenas para administradores autenticados)",
      *     security={{"sanctum":{}}},
      *     @OA\Response(
      *         response=200,
@@ -42,21 +41,21 @@ class ProfileController extends Controller
      *                 @OA\Property(property="first_name", type="string", example="Henri"),
      *                 @OA\Property(property="image_url", type="string", example="http://localhost:8000/storage/profiles/profile.jpg"),
      *                 @OA\Property(property="admin_id", type="integer", example=1),
-     *                 @OA\Property(property="status", type="string", example="actif", description="Visible uniquement pour les administrateurs authentifiés")
+     *                 @OA\Property(property="status", type="string", example="actif", description="Visível apenas para administradores autenticados")
      *             )
      *         )
      *     ),
-     *     @OA\Response(response=401, description="Non authentifié (facultatif, uniquement si nécessaire)")
+     *     @OA\Response(response=401, description="Não autenticado (opcional, somente se necessário)")
      * )
      */
 
-    // Endpoint public pour récupérer les profils actifs
+        // Endpoint público para recuperar os perfis ativos
     public function index(): JsonResponse
     {
-        // Récupère uniquement les profils actifs
+        // Recupera apenas os perfis ativos
         $profiles = $this->profileService->getActiveProfiles();
 
-        // Retourne les données formatées via une ressource
+        // Retorna os dados formatados por meio de um recurso
         return response()->json(ProfileResource::collection($profiles));
     }
 
@@ -86,7 +85,7 @@ class ProfileController extends Controller
      * )
      */
 
-    // Endpoint protégé pour créer un profil
+    // Endpoint protegido para criar um perfil
     public function store(StoreProfileRequest $request): JsonResponse
     {
         $data = $request->validated();
@@ -107,11 +106,11 @@ class ProfileController extends Controller
      * @OA\Put(
      *     path="/api/profiles/{profile}",
      *     tags={"Profiles"},
-     *     summary="Modifier un profil (admin uniquement, tous les admins autorisés)",
+     *     summary="Editar um perfil (somente administradores, todos os administradores têm permissão)",
      *     security={{"sanctum":{}}},
      *     @OA\Parameter(
      *         name="profile",
-     *         description="ID du profil à modifier",
+     *         description="ID do perfil a ser editado",
      *         in="path",
      *         required=true,
      *         @OA\Schema(type="integer", example=1)
@@ -119,30 +118,30 @@ class ProfileController extends Controller
      *     @OA\RequestBody(
      *         required=true,
      *         @OA\JsonContent(
-     *             @OA\Property(property="nom", type="string", example="Laroche modifié"),
+     *             @OA\Property(property="nom", type="string", example="Laroche modificqdo"),
      *             @OA\Property(property="first_name", type="string", example="Henri"),
-     *             @OA\Property(property="image", type="string", example="images/nouveau.jpg"),
+     *             @OA\Property(property="image", type="string", example="images/novo.jpg"),
      *             @OA\Property(property="status", type="string", enum={"inactif", "en attente", "actif"}, example="actif")
      *         )
      *     ),
-     *     @OA\Response(response=200, description="Profil modifié avec succès"),
-     *     @OA\Response(response=422, description="Erreur de validation"),
-     *     @OA\Response(response=404, description="Profil non trouvé"),
-     *     @OA\Response(response=401, description="Non authentifié"),
-     *     @OA\Response(response=403, description="Non autorisé (rôle insuffisant)")
+     *     @OA\Response(response=200, description="Profil modificqdo com sucesso"),
+     *     @OA\Response(response=422, description="Error de validação"),
+     *     @OA\Response(response=404, description="Perfil não encontrado"),
+     *     @OA\Response(response=401, description="Não autenticado"),
+     *     @OA\Response(response=403, description="Não autorizado (permissão insuficiente)")
      * )
      *
      * @throws AuthorizationException
      */
 
-    // Endpoint protégé pour modifier un profil
+    // Endpoint protegido para editar um perfil
 
     /**
      * @throws AuthorizationException
      */
     public function update(UpdateProfileRequest $request, Profile $profile): JsonResponse
     {
-        //ici, je laisse le code au cas où si on doit autoriser que l'administrateur qui a créé soit modifié
+        //Aqui, deixo o código caso seja necessário permitir que apenas o administrador que criou possa editar
         //        $this->authorize('update', $profile);
         //        $data = $request->validated();
         //        $updatedProfile = $this->profileService->updateProfile($profile->id, $data);
@@ -163,33 +162,33 @@ class ProfileController extends Controller
     /**
      * @OA\Delete(
      *     path="/api/profiles/{profile}",
-     *     tags={"Profiles"},
-     *     summary="Supprimer un profil (admin uniquement, tous les admins autorisés)",
+     *     tags={"Perfis"},
+     *     summary="Excluir um perfil (somente administradores, todos os administradores têm permissão)",
      *     security={{"sanctum":{}}},
      *     @OA\Parameter(
      *         name="profile",
-     *         description="ID du profil à supprimer",
+     *         description="ID do perfil a ser excluído",
      *         in="path",
      *         required=true,
      *         @OA\Schema(type="integer", example=1)
      *     ),
-     *     @OA\Response(response=200, description="Profil supprimé avec succès"),
-     *     @OA\Response(response=404, description="Profil non trouvé"),
-     *     @OA\Response(response=401, description="Non authentifié"),
-     *     @OA\Response(response=403, description="Non autorisé (rôle insuffisant)")
+     *     @OA\Response(response=200, description="Perfil excluído com sucesso"),
+     *     @OA\Response(response=404, description="Perfil não encontrado"),
+     *     @OA\Response(response=401, description="Não autenticado"),
+     *     @OA\Response(response=403, description="Não autorizado (permissão insuficiente)")
      * )
      *
      * @throws AuthorizationException
      */
 
-    // Endpoint protégé pour supprimer un profil
+    // Endpoint protegido para excluir um perfil
 
     /**
      * @throws AuthorizationException
      */
     public function destroy(Profile $profile): JsonResponse
     {
-        //ici, je laisse le code au cas où si on doit autoriser que l'administrateur qui a créé peux supprimé
+        // Aqui, deixo o código caso seja necessário permitir que apenas o administrador que criou possa excluir
         //        $this->authorize('delete', $profile);
         //        $deleted = $this->profileService->deleteProfile($profile->id);
         //        if (!$deleted) {
@@ -201,7 +200,7 @@ class ProfileController extends Controller
 
         $this->profileService->deleteProfile($profile->id);
 
-        return response()->json(['message' => 'Profil supprimé avec succès.']);
+        return response()->json(['message' => 'Perfil excluído com sucesso.']);
     }
 
 }

@@ -8,7 +8,7 @@ class StoreCommentRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        // L'accès est maintenant géré via la CommentPolicy
+        // O acesso agora é gerenciado via CommentPolicy
         return true;
     }
 
@@ -26,9 +26,9 @@ class StoreCommentRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'profile_id.required' => 'Le profil est requis.',
-            'profile_id.exists'   => 'Ce profil n\'existe pas.',
-            'content.required'    => 'Le contenu du commentaire est requis.',
+            'profile_id.required' => 'O perfil é obrigatório.',
+            'profile_id.exists'   => 'Este perfil não existe.',
+            'content.required'    => 'O conteúdo do comentário é obrigatório.',
         ];
     }
 }

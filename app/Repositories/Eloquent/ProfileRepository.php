@@ -10,7 +10,7 @@ class ProfileRepository implements ProfileRepositoryInterface
 {
     public function all(): Collection|array
     {
-        return Profile::where('status', 'actif')->get();
+        return Profile::where('status', 'ativo')->get();
     }
 
     public function create(array $data): Profile

@@ -9,7 +9,7 @@ class CheckAdminRole
 {
     public function handle(Request $request, Closure $next)
     {
-        // Supposons que le rôle admin soit stocké dans $user→role et que "admin" soit la valeur requise.
+        // Suponha que o papel de administrador esteja armazenado em $user→role e que 'admin' seja o valor necessário.
         if (!$request->user() || $request->user()->role !== 'admin') {
             return response()->json(['message' => 'Unauthorized'], 403);
         }

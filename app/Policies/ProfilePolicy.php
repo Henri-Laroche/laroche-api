@@ -8,7 +8,7 @@ use App\Models\Profile;
 class ProfilePolicy
 {
     /**
-     * Vérifie si l'administrateur peut créer un profil.
+     * Verifique se o administrador pode criar um perfil.
      */
     public function create(Admin $admin): bool
     {
@@ -17,28 +17,28 @@ class ProfilePolicy
     }
 
     /**
-     * Vérifie si l'administrateur peut mettre à jour le profil.
+     * Verifique se o administrador pode atualizar o perfil.
      */
     public function update(Admin $admin, Profile $profile): bool
     {
-        // Autoriser uniquement si l'admin est propriétaire du profil.
-        // - préfère comme ça
+        // Prefiro assim: Permitir somente se o administrador for o proprietário do perfil.
+
         //return $admin->id === $profile->admin_id;
 
-        // Autorise tous les admins
+        // Permitir todos os administradores.
         return true;
     }
 
     /**
-     * Vérifie si l'administrateur peut supprimer le profil.
+     * Verifique se o administrador pode excluir o perfil.
      */
     public function delete(Admin $admin, Profile $profile): bool
     {
-       // Autoriser uniquement si l'admin est propriétaire du profil.
-        // - préfère comme ça
+        // Prefiro assim: permitir somente se o administrador for o proprietário do perfil.
+
         //return $admin->id === $profile->admin_id;
 
-        // Autorise tous les admins
+        // Permitir todos os administradores.
         return true;
 
     }

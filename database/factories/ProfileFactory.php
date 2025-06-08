@@ -13,12 +13,12 @@ class ProfileFactory extends Factory
     public function definition(): array
     {
         return [
-            'admin_id'   => Admin::factory(), // Crée un admin si nécessaire
+            'admin_id'   => Admin::factory(), // Cria um admin se necessário
             'nom'        => $this->faker->lastName,
             'first_name' => $this->faker->firstName,
-            // Pour l'image, on peut simuler un chemin de fichier
+            // Para a imagem, podemos simular um caminho de arquivo
             'image'      => 'images/' . $this->faker->lexify('????????') . '.jpg',
-            'status'     => $this->faker->randomElement(['inactif', 'en attente', 'actif']),
+            'status'     => $this->faker->randomElement(['inativo', 'pendente', 'ativo']),
         ];
     }
 }

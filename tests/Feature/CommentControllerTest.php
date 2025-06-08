@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Tests\Feature;
 
 use Tests\TestCase;
@@ -14,7 +13,7 @@ class CommentControllerTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_admin_can_add_comment_to_profile()
+    public function test_admin_pode_adicionar_comentario_ao_perfil()
     {
         $admin = Admin::factory()->create(['role' => 'admin']);
         Sanctum::actingAs($admin);
@@ -23,21 +22,22 @@ class CommentControllerTest extends TestCase
 
         $data = [
             'profile_id' => $profile->id,
-            'content'    => 'Très bon profil, travail remarquable !'
+            'content'    => 'Ótimo perfil, trabalho notável!'
         ];
 
         $response = $this->postJson('/api/comments', $data);
 
         $response->assertStatus(201)
-            ->assertJsonFragment(['content' => 'Très bon profil, travail remarquable !']);
+            ->assertJsonFragment(['content' => 'Ótimo perfil, trabalho notável!']);
 
         $this->assertDatabaseHas('comments', [
             'profile_id' => $profile->id,
             'admin_id'   => $admin->id,
-            'content'    => 'Très bon profil, travail remarquable !',
+            'content'    => 'Ótimo perfil, trabalho notável!',
         ]);
     }
-    public function test_admin_cannot_create_multiple_comments_on_same_profile()
+
+    public function test_admin_nao_pode_criar_multiplos_comentarios_no_mesmo_perfil()
     {
         $admin = Admin::factory()->create(['role' => 'admin']);
         Sanctum::actingAs($admin);
@@ -47,10 +47,9 @@ class CommentControllerTest extends TestCase
         Comment::factory()->create([
             'admin_id'   => $admin->id,
             'profile_id' => $profile->id,
-            'content'    => 'Premier commentaire'
+            'content'    => 'Primeiro comentário'
         ]);
 
         $this->assertFalse($admin->can('create', [Comment::class, $profile]));
     }
-
 }

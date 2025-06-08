@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Tests\Feature;
 
 use App\Models\Admin;
@@ -13,7 +12,7 @@ class AuthControllerTest extends TestCase
     use RefreshDatabase;
 
     #[Test]
-    public function admin_can_register()
+    public function admin_pode_registrar()
     {
         $data = [
             'name' => 'Henri Laroche',
@@ -26,15 +25,16 @@ class AuthControllerTest extends TestCase
 
         $response->assertStatus(201)
             ->assertJsonStructure(['message', 'token'])
-            ->assertJson(['message' => 'Connexion réussie']);
+            ->assertJson(['message' => 'Login realizado com sucesso']);
 
         $this->assertDatabaseHas('admins', ['email' => 'admin@example.com']);
     }
 
     #[Test]
-    public function admin_can_login_with_valid_credentials()
+    public function admin_pode_logar_com_credenciais_validas()
     {
-        $admin = Admin::factory()->create([
+        // Cria um admin no banco para testar o login
+        Admin::factory()->create([
             'email' => 'admin@example.com',
             'password' => bcrypt('password123'),
         ]);
@@ -48,12 +48,13 @@ class AuthControllerTest extends TestCase
 
         $response->assertStatus(200)
             ->assertJsonStructure(['message', 'token'])
-            ->assertJson(['message' => 'Connexion réussie']);
+            ->assertJson(['message' => 'Conectado com sucesso']);
     }
 
     #[Test]
-    public function admin_cannot_login_with_invalid_credentials()
+    public function admin_nao_pode_logar_com_credenciais_invalidas()
     {
+        // Garante que exista um admin para a tentativa de login
         Admin::factory()->create([
             'email' => 'admin@example.com',
             'password' => bcrypt('password123'),
@@ -67,6 +68,6 @@ class AuthControllerTest extends TestCase
         $response = $this->postJson('/api/login', $invalidCredentials);
 
         $response->assertStatus(401)
-            ->assertJson(['message' => 'Identifiants invalides']);
+            ->assertJson(['message' => 'Credenciais inválidas']);
     }
 }

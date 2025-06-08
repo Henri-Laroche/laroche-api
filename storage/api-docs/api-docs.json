@@ -2,7 +2,7 @@
     "openapi": "3.0.0",
     "info": {
         "title": "Laroche API Laravel 12",
-        "description": "Documentation complète de l'API Laravel avec Sanctum, Swagger et une architecture propre (SOLID).",
+        "description": "Documentação completa da API Laravel com Sanctum, Swagger e uma arquitetura limpa (SOLID).",
         "version": "1.0.0"
     },
     "paths": {
@@ -11,7 +11,7 @@
                 "tags": [
                     "Auth"
                 ],
-                "summary": "Inscription d'un nouvel administrateur",
+                "summary": "Cadastro de um novo administrador",
                 "operationId": "d6f5d00c40f9de2e9272088aebe648c8",
                 "requestBody": {
                     "required": true,
@@ -46,10 +46,10 @@
                 },
                 "responses": {
                     "201": {
-                        "description": "Compte créé avec succès"
+                        "description": "Conta criada com sucesso"
                     },
                     "422": {
-                        "description": "Erreur de validation"
+                        "description": "Erro de validação"
                     }
                 }
             }
@@ -59,7 +59,7 @@
                 "tags": [
                     "Auth"
                 ],
-                "summary": "Connexion d'un administrateur",
+                "summary": "Login de um administrador",
                 "operationId": "0f5784f47a3fcac35f86ec4e82d967d7",
                 "requestBody": {
                     "required": true,
@@ -89,10 +89,10 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Connecté avec succès"
+                        "description": "Conectado com sucesso"
                     },
                     "401": {
-                        "description": "Identifiants invalides"
+                        "description": "Credenciais inválidas"
                     }
                 }
             }
@@ -102,7 +102,7 @@
                 "tags": [
                     "Comments"
                 ],
-                "summary": "Ajouter un commentaire sur un profil (admin uniquement, un seul commentaire par profil)",
+                "summary": "Adicionar um comentário em um perfil (somente administradores, apenas um comentário por perfil)",
                 "operationId": "943ef5a9a3a98223c01a1267e636d7e8",
                 "requestBody": {
                     "required": true,
@@ -120,7 +120,7 @@
                                     },
                                     "content": {
                                         "type": "string",
-                                        "example": "Très bon profil !"
+                                        "example": "Ótimo perfil!"
                                     }
                                 },
                                 "type": "object"
@@ -130,16 +130,16 @@
                 },
                 "responses": {
                     "201": {
-                        "description": "Commentaire ajouté avec succès"
+                        "description": "Comentário adicionado com sucesso"
                     },
                     "403": {
-                        "description": "Action non autorisée (déjà commenté)"
+                        "description": "Ação não permitida: este perfil já possui um comentário."
                     },
                     "422": {
-                        "description": "Erreur de validation des données"
+                        "description": "Alguns campos estão incorretos ou ausentes"
                     },
                     "401": {
-                        "description": "Non authentifié"
+                        "description": "Usuário não autenticado."
                     }
                 },
                 "security": [
@@ -154,7 +154,7 @@
                 "tags": [
                     "Profiles"
                 ],
-                "summary": "Récupérer la liste des profils actifs (public, statut visible uniquement pour les admins authentifiés)",
+                "summary": "Recuperar a lista de perfis ativos (público, status visível apenas para administradores autenticados)",
                 "operationId": "92d33432e4b6b56fbf6887fede4b2a66",
                 "responses": {
                     "200": {
@@ -186,7 +186,7 @@
                                                 "example": 1
                                             },
                                             "status": {
-                                                "description": "Visible uniquement pour les administrateurs authentifiés",
+                                                "description": "Visível apenas para administradores autenticados",
                                                 "type": "string",
                                                 "example": "actif"
                                             }
@@ -198,7 +198,7 @@
                         }
                     },
                     "401": {
-                        "description": "Non authentifié (facultatif, uniquement si nécessaire)"
+                        "description": "Não autenticado (opcional, somente se necessário)"
                     }
                 },
                 "security": [

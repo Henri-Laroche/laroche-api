@@ -27,7 +27,7 @@ class ProfileResource extends JsonResource
             'image' => $this->image,
             'image_url' => $this->image ? Storage::disk('public')->url($this->image) : null,
 
-            // Ajoute uniquement le champ statut si l'utilisateur est authentifié
+            // Adiciona o campo status apenas se o usuário estiver autenticado
             $this->mergeWhen(auth('sanctum')->check(), [
                 'status' => $this->status,
             ]),

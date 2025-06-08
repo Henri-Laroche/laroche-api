@@ -20,10 +20,10 @@ class ProfileControllerTest extends TestCase
         Sanctum::actingAs($admin, ['*']);
 
         $data = [
-            'nom' => 'Laroche',
+            'nom'        => 'Laroche',
             'first_name' => 'Henri',
-            'image' => 'images/sample.jpg',
-            'status' => 'actif'
+            'image'      => 'images/sample.jpg',
+            'status'     => 'ativo'
         ];
 
         $response = $this->postJson('/api/profiles', $data);
@@ -32,7 +32,7 @@ class ProfileControllerTest extends TestCase
             ->assertJsonFragment(['nom' => 'Laroche']);
 
         $this->assertDatabaseHas('profiles', [
-            'nom' => 'Laroche',
+            'nom'      => 'Laroche',
             'admin_id' => $admin->id
         ]);
     }
@@ -46,16 +46,16 @@ class ProfileControllerTest extends TestCase
 
         $profile = Profile::factory()->create(['admin_id' => $admin2->id]);
 
-        $data = ['nom' => 'Mis à jour par autre admin'];
+        $data = ['nom' => 'Atualizado por outro administrador'];
 
-        $response = $this->putJson("/api/profiles/$profile->id", $data);
+        $response = $this->putJson("/api/profiles/{$profile->id}", $data);
 
         $response->assertStatus(200)
-            ->assertJsonFragment(['nom' => 'Mis à jour par autre admin']);
+            ->assertJsonFragment(['nom' => 'Atualizado por outro administrador']);
 
         $this->assertDatabaseHas('profiles', [
-            'id' => $profile->id,
-            'nom' => 'Mis à jour par autre admin'
+            'id'  => $profile->id,
+            'nom' => 'Atualizado por outro administrador'
         ]);
     }
 
@@ -68,10 +68,10 @@ class ProfileControllerTest extends TestCase
 
         $profile = Profile::factory()->create(['admin_id' => $admin2->id]);
 
-        $response = $this->deleteJson("/api/profiles/$profile->id");
+        $response = $this->deleteJson("/api/profiles/{$profile->id}");
 
         $response->assertStatus(200)
-            ->assertJsonFragment(['message' => 'Profil supprimé avec succès.']);
+            ->assertJsonFragment(['message' => 'Perfil excluído com sucesso.']);
 
         $this->assertDatabaseMissing('profiles', [
             'id' => $profile->id,
@@ -81,12 +81,12 @@ class ProfileControllerTest extends TestCase
     #[Test]
     public function test_public_cannot_see_status_field()
     {
-        $profile = Profile::factory()->create(['status' => 'actif']);
+        $profile = Profile::factory()->create(['status' => 'ativo']);
 
         $response = $this->getJson('/api/profiles');
 
         $response->assertStatus(200)
-            ->assertJsonMissing(['status' => 'actif'])
+            ->assertJsonMissing(['status' => 'ativo'])
             ->assertJsonFragment(['nom' => $profile->nom]);
     }
 
@@ -96,11 +96,14 @@ class ProfileControllerTest extends TestCase
         $admin = Admin::factory()->create(['role' => 'admin']);
         Sanctum::actingAs($admin, ['*']);
 
-        $profile = Profile::factory()->create(['status' => 'actif']);
+        $profile = Profile::factory()->create(['status' => 'ativo']);
 
         $response = $this->getJson('/api/profiles');
 
         $response->assertStatus(200)
-            ->assertJsonFragment(['status' => 'actif', 'nom' => $profile->nom]);
+            ->assertJsonFragment([
+                'status' => 'ativo',
+                'nom'    => $profile->nom
+            ]);
     }
 }

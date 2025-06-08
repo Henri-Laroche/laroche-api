@@ -28,7 +28,7 @@ class Profile extends Model
     ];
 
     /**
-     * Un profil appartient à un administrateur.
+     * Um perfil pertence a um administrador.
      */
     public function admin(): BelongsTo
     {
@@ -36,7 +36,7 @@ class Profile extends Model
     }
 
     /**
-     * Un profil peut avoir plusieurs commentaires.
+     * Um perfil pode ter vários comentários.
      */
     public function comments(): HasMany
     {

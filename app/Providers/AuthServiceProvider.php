@@ -13,17 +13,17 @@ use Illuminate\Support\Facades\Gate;
 class AuthServiceProvider extends ServiceProvider
 {
     /**
-     * Les mappages de policies pour l'application.
+     * Os mapeamentos de policies da aplicação.
      *
      * @var array<class-string, class-string>
      */
     protected $policies = [
-        // Liez ici vos modèles aux policies correspondantes.
+        // Vincule aqui seus modelos às policies correspondentes.
         Profile::class => ProfilePolicy::class,
     ];
 
     /**
-     * Enregistrez tous les services d’authentification/autorisation.
+     * Registre todos os serviços de autenticação/autorização.
      */
     public function boot(): void
     {

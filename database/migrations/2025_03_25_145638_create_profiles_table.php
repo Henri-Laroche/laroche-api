@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -19,9 +18,9 @@ return new class extends Migration
             $table->string('nom');
             $table->string('first_name');
             $table->string('image'); // Stocke le chemin du fichier image. Vous pouvez ajouter ->nullable() si nécessaire.
-            $table->enum('status', ['inactif', 'en attente', 'actif'])->default('en attente');
+            $table->enum('status', ['inativo', 'pendente', 'ativo'])->default('pendente');
             $table->timestamps();
-            // Index sur la colonne status pour optimiser les requêtes
+            // Índice na coluna status para otimizar as consultas
             $table->index('status');
         });
     }

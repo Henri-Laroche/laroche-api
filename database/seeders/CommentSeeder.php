@@ -10,11 +10,11 @@ class CommentSeeder extends Seeder
 {
     public function run(): void
     {
-        // Pour chaque profile, créer un commentaire de l'admin qui a créé le profile
+        // Para cada perfil, criar um comentário do admin que criou o perfil
         $profiles = Profile::all();
 
         foreach ($profiles as $profile) {
-            // On vérifie qu'un commentaire n'existe pas déjà si besoin (règle métier)
+            // Verificamos se um comentário já não existe, se necessário (regra de negócio)
             Comment::factory()->create([
                 'profile_id' => $profile->id,
                 'admin_id'   => $profile->admin_id,

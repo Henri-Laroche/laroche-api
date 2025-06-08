@@ -18,7 +18,7 @@ class ProfileService implements ProfileServiceInterface
 
     public function getActiveProfiles(): Collection|array
     {
-        // Doit récupérer seulement les profils actifs
+        // Deve recuperar apenas os perfis ativos
         return $this->profileRepository->all();
     }
 

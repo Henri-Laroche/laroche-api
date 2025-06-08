@@ -8,11 +8,11 @@ use App\Models\Profile;
 class CommentPolicy
 {
     /**
-     * Vérifie clairement si l'administrateur peut ajouter un commentaire à un profil donné.
+     * Verifique claramente se o administrador pode adicionar um comentário a um determinado perfil.
      */
     public function create(Admin $admin, Profile $profile): bool
     {
-        // utilise les relations définies plutôt qu'une requête brute.
+        // Use as relações definidas em vez de uma consulta bruta.
         return !$profile->comments()->where('admin_id', $admin->id)->exists();
     }
 }

@@ -20,7 +20,7 @@ class ProfileTest extends TestCase
             'nom' => 'Doe',
             'first_name' => 'John',
             'image' => 'images/sample.jpg',
-            'status' => 'actif'
+            'status' => 'ativo'
         ];
 
         $profile = Profile::create($data);

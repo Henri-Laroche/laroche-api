@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Services\Implementations\AuthService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use OpenApi\Annotations as OA;
 
 class AuthController extends Controller
 {
@@ -21,7 +20,7 @@ class AuthController extends Controller
      * @OA\Post(
      *     path="/api/register",
      *     tags={"Auth"},
-     *     summary="Inscription d'un nouvel administrateur",
+     *     summary="Cadastro de um novo administrador",
      *     @OA\RequestBody(
      *         required=true,
      *         @OA\JsonContent(
@@ -31,13 +30,13 @@ class AuthController extends Controller
      *             @OA\Property(property="password", type="string", format="password", example="password123")
      *         )
      *     ),
-     *     @OA\Response(response=201, description="Compte créé avec succès"),
-     *     @OA\Response(response=422, description="Erreur de validation")
+     *     @OA\Response(response=201, description="Conta criada com sucesso"),
+     *     @OA\Response(response=422, description="Erro de validação")
      * )
      */
     public function register(Request $request): JsonResponse
     {
-        // Valider la requête, créer l'admin et retourner un token
+        // Validar a requisição, criar o administrador e retornar um token
         $data = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:admins',
@@ -47,7 +46,7 @@ class AuthController extends Controller
         $admin = $this->authService->register($data);
 
         return response()->json([
-            'message' => 'Connexion réussie',
+            'message' => 'Login realizado com sucesso',
             'token'   => $admin->createToken('apiToken')->plainTextToken
         ], 201);
     }
@@ -56,7 +55,7 @@ class AuthController extends Controller
      * @OA\Post(
      *     path="/api/login",
      *     tags={"Auth"},
-     *     summary="Connexion d'un administrateur",
+     *     summary="Login de um administrador",
      *     @OA\RequestBody(
      *         required=true,
      *         @OA\JsonContent(
@@ -65,8 +64,8 @@ class AuthController extends Controller
      *             @OA\Property(property="password", type="string", format="password", example="password123")
      *         )
      *     ),
-     *     @OA\Response(response=200, description="Connecté avec succès"),
-     *     @OA\Response(response=401, description="Identifiants invalides")
+     *     @OA\Response(response=200, description="Conectado com sucesso"),
+     *     @OA\Response(response=401, description="Credenciais inválidas")
      * )
      */
     public function login(Request $request): JsonResponse
@@ -79,11 +78,11 @@ class AuthController extends Controller
         $token = $this->authService->login($credentials);
 
         if (!$token) {
-            return response()->json(['message' => 'Identifiants invalides'], 401);
+            return response()->json(['message' => 'Credenciais inválidas'], 401);
         }
 
         return response()->json([
-            'message' => 'Connexion réussie',
+            'message' => 'Conectado com sucesso',
             'token'   => $token
         ]);
     }

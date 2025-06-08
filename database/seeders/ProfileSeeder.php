@@ -10,7 +10,7 @@ class ProfileSeeder extends Seeder
 {
     public function run(): void
     {
-        // Pour chaque admin existant, créer 3 profils
+        // Para cada admin existente, criar 3 perfis
         $admins = Admin::all();
 
         foreach ($admins as $admin) {

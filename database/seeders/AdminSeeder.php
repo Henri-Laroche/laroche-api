@@ -10,14 +10,14 @@ class AdminSeeder extends Seeder
 {
     public function run(): void
     {
-        // Création d'un super admin avec des identifiants connus
+        // Criação de um superadmin com credenciais conhecidas
         Admin::factory()->create([
             'name' => 'Super Admin',
             'email'    => 'admin@example.com',
             'password' => Hash::make('password'),
         ]);
 
-        // Création d'autres admins aléatoires
+        // Criação de  varios administradores aleatorios
         Admin::factory()->count(5)->create();
     }
 }

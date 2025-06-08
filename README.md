@@ -1,100 +1,104 @@
-# Laroche-api - Test technique
+# Laroche-api - Teste técnico
 
-## 👨‍💻 Auteur
+## 👨‍💻 Autor
 
 - **Henri Laroche**
 
 ---
 
-## 📖 Description du projet
+## 📖 Descrição do projeto
 
-Ce projet est une API REST développée avec Laravel 12 avec PHP-8.4.5.
-Elle permet une gestion complète des administrateurs,
-des profils et des commentaires, incluant l’authentification sécurisée via Laravel Sanctum,
-la gestion sécurisée des fichiers avec Laravel Storage, et une documentation interactive via Swagger.
-L'architecture respecte strictement les principes S.O.L.I.D.
-
----
-
-## 🚀 Fonctionnalités principales
-
-- Authentification sécurisée (Laravel Sanctum)
-- Gestion complète des profils (CRUD, autorisation via Policies)
-- Commentaires uniques par administrateur sur chaque profil (autorisation via Policies)
-- Documentation interactive complète (Swagger l5-swagger)
-- Gestion sécurisée des images avec Laravel Storage
-- Architecture propre (S.O.L.I.D)
-- Tests automatisés complets (PHPUnit)
-- Middleware pour vérifier le rôle minimum requis (admin)
+Este projeto é uma API REST desenvolvida com Laravel 12 e PHP 8.4.5.  
+Ele permite um gerenciamento completo de administradores, perfis e comentários, incluindo autenticação segura via
+Laravel Sanctum, gerenciamento seguro de arquivos com Laravel Storage e documentação interativa via Swagger.  
+A arquitetura respeita estritamente os princípios S.O.L.I.D.
 
 ---
 
-## ⚙️ Prérequis
+## 📝 Observação
 
-- PHP 8.2 ou supérieur
+As implementações mais avançadas foram idealizadas e desenvolvidas por mim, inclusive a estruturação inicial de todo o
+projeto.
+
+---
+
+## 🚀 Funcionalidades principais
+
+- Autenticação segura (Laravel Sanctum)
+- Gerenciamento completo de perfis (CRUD, autorização via Policies) - Minha ideia
+- Comentários únicos por administrador em cada perfil (autorização via Policies) - Minha ideia
+- Documentação interativa completa (Swagger l5-swagger) - Minha ideia
+- Gerenciamento seguro de imagens com Laravel Storage - Minha ideia
+- Arquitetura limpa (S.O.L.I.D) - Minha ideia
+- Testes automatizados completos (PHPUnit)
+- Middleware para verificar o papel mínimo requerido (admin)
+
+---
+
+## ⚙️ Pré-requisitos
+
+- PHP 8.2 ou superior
 - Composer
 - MySQL ou PostgreSQL
 
+---
+
+## 🛠 Instalação
+
+1. Clone o repositório:
+
+   ```bash
+   git clone https://github.com/ton-compte/laroche-api.git
+   cd laroche-api
+   ```
+
+2. Instale as dependências:
+
+   ```bash
+   composer install
+   ```
+
+3. Configure seu arquivo `.env`:
+
+   ```bash
+   cp .env.example .env
+   php artisan key:generate
+   ```
+
+4. Configure seu banco de dados em `.env`:
+
+   ```dotenv
+   DB_CONNECTION=pgsql
+   DB_HOST=127.0.0.1
+   DB_PORT=5432
+   DB_DATABASE=laroche-api
+   DB_USERNAME=postgres
+   DB_PASSWORD=
+   ```
+
+5. Migre o banco de dados:
+
+   ```bash
+   php artisan migrate --seed
+   ```
+
+6. Crie o link simbólico para os arquivos:
+
+   ```bash
+   php artisan storage:link
+   ```
+
+7. Inicie seu servidor Laravel:
+
+   ```bash
+   php artisan serve
+   ```
 
 ---
 
-## 🛠 Installation
+## ✅ Testes
 
-1. Clone le dépôt :
-
-```bash
-git clone https://github.com/ton-compte/laroche-api.git
-cd laroche-api
-```
-
-2. Installe les dépendances :
-
-```bash
-composer install
-```
-
-3. Configure ton fichier `.env` :
-
-```bash
-cp .env.example .env
-php artisan key:generate
-```
-
-4. Configure ta base de données dans `.env` :
-
-```dotenv
-DB_CONNECTION=pgsql
-DB_HOST=127.0.0.1
-DB_PORT=5432
-DB_DATABASE=laroche-api
-DB_USERNAME=postgres
-DB_PASSWORD=
-
-```
-
-5. Migrer la base de données :
-
-```bash
-php artisan migrate --seed
-```
-
-6. Crée le lien symbolique pour les fichiers :
-
-```bash
-php artisan storage:link
-```
-
-7. Lance ton serveur Laravel :
-
-```bash
-php artisan serve
-```
-
----
-
-## ✅ Tests
-
-Lance les tests automatisés avec PHPUnit :
+Execute os testes automatizados com PHPUnit:
 
 ```bash
 php artisan test
@@ -102,67 +106,66 @@ php artisan test
 
 ---
 
-## 📗 Documentation de l’API (Swagger)
+## 📗 Documentação da API (Swagger)
 
-- Génère la documentation :
+- Gere a documentação:
 
-```bash
-php artisan l5-swagger:generate
-```
+  ```bash
+  php artisan l5-swagger:generate
+  ```
 
-- Accède à la documentation interactive :
+- Acesse a documentação interativa:
 
-```
-http://localhost:8000/api/documentation
-```
+  ```
+  http://localhost:8000/api/documentation
+  ```
 
 ---
 
-## 🗂 Structure du projet
+## 🗂 Estrutura do projeto
 
 ```text
 app/
 ├── Http
-│   ├── Controllers        # Contrôleurs d’API
+│   ├── Controllers        # Controladores da API
 │   │   └── Api
-│   │       └── V1         # Versionnement de l’API (ex: V1, V2,…)
-│   ├── Middleware         # Middleware de l’application
-│   ├── Requests           # Classes de validation des requêtes
-│   └── Resources          # Transformateurs/Resource pour formater les réponses JSON
-├── Models                 # Modèles Eloquent
-├── Policies               # Gestion des autorisations
-├── Repositories           # Accès aux données
-│   ├── Contracts          # Contrats pour les repositories
-│   └── Eloquent           # Implémentations concrètes basées sur Eloquent
-├── Services               # Logique métier découplée
-│   ├── Contracts          # Interfaces pour les services
-│   └── Implementations    # Implémentations concrètes des services
+│   │       └── V1         # Versionamento da API (ex: V1, V2,…)
+│   ├── Middleware         # Middleware da aplicação
+│   ├── Requests           # Classes de validação das requisições
+│   └── Resources          # Transformadores/Resource para formatar as respostas JSON
+├── Models                 # Modelos Eloquent
+├── Policies               # Gerenciamento de autorizações
+├── Repositories           # Acesso aos dados
+│   ├── Contracts          # Contratos para os repositórios
+│   └── Eloquent           # Implementações concretas baseadas em Eloquent
+├── Services               # Lógica de negócio desacoplada
+│   ├── Contracts          # Interfaces para os serviços
+│   └── Implementations    # Implementações concretas dos serviços
 ```
 
 ---
 
-## 🛡 Sécurité & bonnes pratiques
+## 🛡 Segurança e boas práticas
 
-- Validation stricte de l'entrée utilisateur
-- Cryptage des mots de passe (bcrypt)
-- Protection des routes avec middleware & Policies
-- Stockage sécurisé des images avec Laravel Storage
-- Affichage conditionnel des champs sensibles selon authentification
+- Validação rigorosa da entrada do usuário
+- Criptografia de senhas (bcrypt)
+- Proteção de rotas com middleware e Policies
+- Armazenamento seguro de imagens com Laravel Storage
+- Exibição condicional de campos sensíveis conforme autenticação
 
 ---
 
-## 🚩 Points d’amélioration futurs
+## 🚩 Pontos de melhoria futuros
 
-- Dockerisation
+- Dockerização
 - CI/CD via GitHub Actions
-- Analyse statique du code (Laravel Pint, PHPStan)
-- Gestion avancée des rôles et permissions (Spatie Permission)
-- Redis (pour cache)
-- Addition de try et catch
+- Análise estática de código (Laravel Pint, PHPStan)
+- Gerenciamento avançado de papéis e permissões (Spatie Permission)
+- Redis (para cache)
+- Adição de try e catch
 
 ---
 
-## 📜 Licence
+## 📜 Licença
 
-Ce projet est sous licence MIT
-
+Este projeto está sob licença MIT  

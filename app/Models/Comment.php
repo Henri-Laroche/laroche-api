@@ -21,7 +21,7 @@ class Comment extends Model
     ];
 
     /**
-     * Un commentaire appartient à un profil.
+     * Um comentário pertence a um perfil.
      */
     public function profile(): BelongsTo
     {
@@ -29,7 +29,7 @@ class Comment extends Model
     }
 
     /**
-     * Un commentaire est créé par un administrateur.
+     * Um comentário é criado por um administrador.
      */
     public function admin(): BelongsTo
     {

@@ -9,8 +9,7 @@ use Illuminate\Support\Facades\Hash;
 class AuthService implements AuthServiceInterface
 {
     /**
-     * Enregistrer un nouvel administrateur.
-     *
+     * Registrar um novo administrador.
      * @param array $data
      * @return Admin
      */
@@ -21,7 +20,7 @@ class AuthService implements AuthServiceInterface
     }
 
     /**
-     * Authentifiez un administrateur et générez un jeton API.
+     * Autentique um administrador e gerar um token de API.
      *
      * @param array $credentials
      * @return string|false
@@ -33,7 +32,7 @@ class AuthService implements AuthServiceInterface
         if (!$admin || !Hash::check($credentials['password'], $admin->password)) {
             return false;
         }
-        // Génère et retourne un token via Sanctum
+        // Gera e retorna um token via Sanctum
         return $admin->createToken('apiToken')->plainTextToken;
     }
 

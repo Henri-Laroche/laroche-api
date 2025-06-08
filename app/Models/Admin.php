@@ -31,7 +31,7 @@ class Admin extends Authenticatable
     ];
 
     /**
-     * Un administrateur peut avoir plusieurs profils.
+     * Um administrador pode ter vários perfis.
      */
     public function profile(): HasMany
     {
@@ -39,7 +39,7 @@ class Admin extends Authenticatable
     }
 
     /**
-     * Un administrateur peut avoir plusieurs commentaires.
+     * Um administrador pode ter vários comentários.
      */
     public function comments(): HasMany
     {

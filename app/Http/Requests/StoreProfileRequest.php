@@ -7,18 +7,18 @@ use Illuminate\Foundation\Http\FormRequest;
 class StoreProfileRequest extends FormRequest
 {
     /**
-     * Détermine si l'utilisateur est autorisé à faire cette requête.
+     * Determina se o usuário está autorizado a fazer esta requisição.
      *
      * @return bool
      */
     public function authorize(): bool
     {
-        // Retournez true pour autoriser tous les utilisateurs authentifiés (ou appliquez votre logique)
+        // Retorne true para autorizar todos os usuários autenticados (ou aplique sua própria lógica)
         return true;
     }
 
     /**
-     * Définit les règles de validation pour la requête.
+     * Define as regras de validação para a requisição.
      *
      * @return array
      */
@@ -27,8 +27,9 @@ class StoreProfileRequest extends FormRequest
         return [
             'nom' => 'required|string|max:255',
             'first_name' => 'required|string|max:255',
-            'image' => 'required|string', // ou 'required|image' selon votre besoin
-            'status' => 'required|in:inactif,en attente,actif',
+            'image' => 'required|string', // ou 'required|image' conforme sua necessidade
+            'status' => 'required|in:inativo,pendente,ativo',
         ];
+
     }
 }

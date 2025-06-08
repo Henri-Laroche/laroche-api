@@ -7,20 +7,20 @@ use Illuminate\Foundation\Http\FormRequest;
 class UpdateProfileRequest extends FormRequest
 {
     /**
-     * Détermine si l'utilisateur est autorisé à faire cette requête.
+     * Determina se o usuário está autorizado a fazer esta requisição.
      *
      * @return bool
      */
     public function authorize(): bool
     {
-        // Vous pouvez ajouter une logique d'autorisation ici.
+        // Você pode adicionar uma lógica de autorização aqui.
         return true;
     }
 
     /**
-     * Retourne les règles de validation pour la mise à jour d'un profil.
+     * Retorna as regras de validação para a atualização de um perfil.
      *
-     * Utiliser "sometimes|required" permet une mise à jour partielle.
+     * Usar "sometimes|required" permite uma atualização parcial.
      *
      * @return array
      */
@@ -29,8 +29,8 @@ class UpdateProfileRequest extends FormRequest
         return [
             'nom' => 'sometimes|required|string|max:255',
             'first_name' => 'sometimes|required|string|max:255',
-            'image' => 'sometimes|required|string', // ou 'sometimes|required|image' si vous gérez un fichier
-            'status' => 'sometimes|required|in:inactif,en attente,actif',
+            'image' => 'sometimes|required|string', // ou 'sometimes|required|image' se você estiver lidando com um arquivo
+            'status' => 'sometimes|required|in:inativo,pendente,ativo',
         ];
     }
 }
